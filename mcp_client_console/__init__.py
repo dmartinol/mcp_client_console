@@ -7,11 +7,11 @@ __author__ = "Daniele Martinoli (dmartino)"
 __description__ = "A Python UI to test MCP servers for protocol compliance"
 
 from .core.client import MCPClientService
-from .core.exceptions import MCPClientError, ConnectionError, ToolExecutionError
+from .core.exceptions import ConnectionError, MCPClientError, ToolExecutionError
 
 __all__ = [
     "MCPClientService",
-    "MCPClientError", 
+    "MCPClientError",
     "ConnectionError",
-    "ToolExecutionError"
+    "ToolExecutionError",
 ]

@@ -1,15 +1,15 @@
 """Connection handlers for different MCP transports."""
 
 from .base import MCPConnection
-from .stdio_connection import StdioConnection
-from .sse_connection import SSEConnection  
-from .http_connection import HTTPConnection
 from .factory import ConnectionFactory
+from .http_connection import HTTPConnection
+from .sse_connection import SSEConnection
+from .stdio_connection import StdioConnection
 
 __all__ = [
     "MCPConnection",
-    "StdioConnection", 
+    "StdioConnection",
     "SSEConnection",
     "HTTPConnection",
-    "ConnectionFactory"
+    "ConnectionFactory",
 ]

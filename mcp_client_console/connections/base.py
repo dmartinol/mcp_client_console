@@ -5,6 +5,7 @@ Base connection interface for MCP.
 from abc import ABC, abstractmethod
 from typing import Any
 
+
 class MCPConnection(ABC):
     """
     Abstract base class for MCP connections.
@@ -21,4 +22,3 @@ class MCPConnection(ABC):
     @abstractmethod
     async def call_tool(self, tool_name: str, arguments: dict):
         pass
-

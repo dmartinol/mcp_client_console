@@ -12,7 +12,7 @@ help:
 	@echo "  run          Run the Streamlit application"
 	@echo "  test         Run all tests"
 	@echo "  lint         Run code linting (flake8)"
-	@echo "  format       Format code (black + isort)"
+	@echo "  format       Format code (autoflake + isort + black)"
 	@echo "  type-check   Run type checking (mypy)"
 	@echo ""
 	@echo "Build:"
@@ -31,11 +31,11 @@ install-dev:
 # Development
 run:
 	@echo "🚀 Starting MCP Client Console..."
-	uv run streamlit run main.py --server.port 8501 --server.address localhost
+	uv run python -m streamlit run main.py --server.port 8501 --server.address localhost
 
 test:
-	@echo "🧪 Running tests..."
-	uv run pytest
+	@echo "🧪 Running tests with coverage..."
+	uv run pytest --cov=mcp_client_console --cov-report=term-missing --cov-report=html
 
 lint:
 	@echo "🔍 Running linter..."
@@ -43,8 +43,9 @@ lint:
 
 format:
 	@echo "🎨 Formatting code..."
-	uv run black .
+	uv run autoflake --in-place --remove-all-unused-imports --remove-unused-variables --recursive .
 	uv run isort .
+	uv run black .
 
 type-check:
 	@echo "🔎 Running type checks..."
