@@ -178,6 +178,7 @@ omit = [
     "*/tests/*",
     "*/test_*",
     "*/__pycache__/*",
+    "*/ui/*",  # Exclude UI modules from coverage
 ]
 
 [tool.coverage.report]
