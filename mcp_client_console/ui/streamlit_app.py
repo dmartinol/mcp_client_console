@@ -320,20 +320,20 @@ def main():
            - **STDIO**: Connect to a local MCP server process
            - **SSE**: Connect via Server-Sent Events
            - **HTTP**: Connect via HTTP transport
-        
+
         2. **Configure the connection** parameters based on your server setup
-        
+
         3. **Click Connect** to establish the connection
-        
+
         4. **Explore** the server's tools, prompts, and resources once connected
-        
+
         ### Example STDIO Configuration:
         - Command: `python`
         - Arguments: `your_mcp_server.py`
-        
+
         ### Example SSE Configuration:
         - URL: `http://localhost:8000/sse`
-        
+
         ### Example HTTP Configuration:
         - Base URL: `http://localhost:8000`
         """

@@ -48,7 +48,7 @@ class HTTPConnection(MCPConnection):
 
         except requests.RequestException as e:
             logger.error(f"HTTP connection failed: {e}")
-            raise ConnectionError(f"Failed to connect via HTTP: {str(e)}") from e
+            raise ConnectionError(f"Failed to connect via HTTP: {e!s}") from e
 
     async def disconnect(self):
         """
@@ -86,7 +86,8 @@ class HTTPConnection(MCPConnection):
                 return result
             else:
                 raise ToolExecutionError(
-                    f"Tool execution failed with status {response.status_code}: {response.text}",
+                    f"Tool execution failed with status "
+                    f"{response.status_code}: {response.text}",
                     tool_name=tool_name,
                     arguments=arguments,
                 )
@@ -94,7 +95,7 @@ class HTTPConnection(MCPConnection):
         except requests.RequestException as e:
             logger.error(f"Tool execution failed for '{tool_name}': {e}")
             raise ToolExecutionError(
-                f"Failed to execute tool '{tool_name}': {str(e)}",
+                f"Failed to execute tool '{tool_name}': {e!s}",
                 tool_name=tool_name,
                 arguments=arguments,
             ) from e

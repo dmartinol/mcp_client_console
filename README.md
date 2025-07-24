@@ -164,6 +164,40 @@ Once connected, you can execute individual tools:
 
 ## Development
 
+### Code Quality Tools
+
+This project uses modern Python development tools for fast and reliable code quality:
+
+- **Ruff**: Lightning-fast Python linter and formatter that replaces flake8, black, and isort
+  - `make lint`: Check for code quality issues
+  - `make format`: Format code and fix auto-fixable issues
+  - Configured in `pyproject.toml` with sensible defaults
+
+- **MyPy**: Static type checking for Python
+  - `make type-check`: Run type checking
+
+- **Pytest**: Testing framework with coverage reporting
+  - `make test`: Run tests with coverage
+
+### Tips for Using Ruff
+
+```bash
+# Check for issues without fixing
+uv run ruff check mcp_client_console
+
+# Check and fix auto-fixable issues
+uv run ruff check --fix mcp_client_console
+
+# Format code (like black)
+uv run ruff format mcp_client_console
+
+# Check specific files
+uv run ruff check mcp_client_console/core/client.py
+
+# Show what would be fixed without making changes
+uv run ruff check --diff mcp_client_console
+```
+
 To extend this client:
 
 1. **Add new connection types**: Implement new classes in `mcp_client_console/connections/` inheriting from `MCPConnection`
@@ -185,11 +219,9 @@ make run
 # Run tests
 make test
 
-# Code formatting
-make format
-
-# Code linting
-make lint
+# Code formatting and linting (using Ruff)
+make format  # Format code and fix auto-fixable issues
+make lint    # Check for linting issues
 
 # Type checking
 make type-check
@@ -207,6 +239,7 @@ make build
 - **Extensible Connections**: Add new MCP transports by implementing the `MCPConnection` interface
 - **Centralized Error Handling**: Consistent error management across all components
 - **Modern Tooling**: Uses `uv` for fast dependency management and `pyproject.toml` for configuration
+- **Fast Code Quality**: Uses `ruff` for lightning-fast linting and formatting (replaces flake8, black, and isort)
 
 ## Troubleshooting
 

@@ -81,7 +81,8 @@ class ErrorHandler:
         if "Invalid URL" in error_message or "urlparse" in error_message.lower():
             analysis["error_category"] = "url_parsing"
             analysis["suggestions"].append(
-                "Check that the URL is properly formatted with protocol (http:// or https://)"
+                "Check that the URL is properly formatted with protocol "
+                "(http:// or https://)"
             )
             analysis["suggestions"].append(
                 "Ensure the URL doesn't contain invalid characters"
@@ -163,7 +164,7 @@ class ErrorHandler:
             return error.message
 
         # Generic fallback
-        return f"An unexpected error occurred: {str(error)}"
+        return f"An unexpected error occurred: {error!s}"
 
     @staticmethod
     def log_error(error: Exception, context: Optional[str] = None):
@@ -181,7 +182,7 @@ class ErrorHandler:
             logger.error(f"{type(error).__name__}{context_msg}: {error.message}")
             logger.debug(f"Error details: {json.dumps(error_details, indent=2)}")
         else:
-            logger.error(f"Unexpected error{context_msg}: {str(error)}")
+            logger.error(f"Unexpected error{context_msg}: {error!s}")
             logger.debug(f"Error details: {json.dumps(error_details, indent=2)}")
 
 

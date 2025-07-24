@@ -76,8 +76,9 @@ class MCPClientService:
             self._connected = True
 
             logger.info(
-                f"Successfully connected to MCP server. Found {len(self.tools)} tools, "
-                f"{len(self.prompts)} prompts, {len(self.resources)} resources"
+                f"Successfully connected to MCP server. Found {len(self.tools)} "
+                f"tools, {len(self.prompts)} prompts, {len(self.resources)} "
+                f"resources"
             )
 
             return self.server_info
@@ -90,7 +91,7 @@ class MCPClientService:
                 raise
             else:
                 raise ConnectionError(
-                    f"Connection failed: {str(e)}",
+                    f"Connection failed: {e!s}",
                     connection_type=connection_config.connection_type,
                     connection_params=connection_config.parameters,
                 ) from e
@@ -165,7 +166,7 @@ class MCPClientService:
                 raise
             else:
                 raise ToolExecutionError(
-                    f"Tool execution failed: {str(e)}",
+                    f"Tool execution failed: {e!s}",
                     tool_name=tool_name,
                     arguments=arguments,
                     execution_context={"execution_time": execution_time},

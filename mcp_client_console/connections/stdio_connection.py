@@ -77,7 +77,7 @@ class StdioConnection(MCPConnection):
 
         except Exception as e:
             logger.error(f"STDIO connection failed: {e}")
-            raise ConnectionError(f"Failed to connect via STDIO: {str(e)}") from e
+            raise ConnectionError(f"Failed to connect via STDIO: {e!s}") from e
 
     async def disconnect(self):
         """
@@ -117,7 +117,7 @@ class StdioConnection(MCPConnection):
         except Exception as e:
             logger.error(f"Tool execution failed for '{tool_name}': {e}")
             raise ToolExecutionError(
-                f"Failed to execute tool '{tool_name}': {str(e)}",
+                f"Failed to execute tool '{tool_name}': {e!s}",
                 tool_name=tool_name,
                 arguments=arguments,
             ) from e

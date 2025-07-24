@@ -7,9 +7,9 @@ from .sse_connection import SSEConnection
 from .stdio_connection import StdioConnection
 
 __all__ = [
-    "MCPConnection",
-    "StdioConnection",
-    "SSEConnection",
-    "HTTPConnection",
     "ConnectionFactory",
+    "HTTPConnection",
+    "MCPConnection",
+    "SSEConnection",
+    "StdioConnection",
 ]

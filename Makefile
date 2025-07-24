@@ -1,4 +1,4 @@
-.PHONY: help install install-dev run test lint format type-check clean build
+.PHONY: help install install-dev run test lint format format-check type-check clean build
 
 # Default target
 help:
@@ -11,9 +11,13 @@ help:
 	@echo "Development:"
 	@echo "  run          Run the Streamlit application"
 	@echo "  test         Run all tests"
-	@echo "  lint         Run code linting (flake8)"
-	@echo "  format       Format code (autoflake + isort + black)"
+	@echo "  lint         Run code linting (ruff)"
+	@echo "  format       Format code (ruff)"
+	@echo "  format-check Check if code is properly formatted (ruff)"
 	@echo "  type-check   Run type checking (mypy)"
+	@echo ""
+	@echo "Quality:"
+	@echo "  check        Run all quality checks (lint + format-check + type-check + test)"
 	@echo ""
 	@echo "Build:"
 	@echo "  build        Build the package"
@@ -39,13 +43,17 @@ test:
 
 lint:
 	@echo "🔍 Running linter..."
-	uv run flake8 mcp_client_console
+	uv run ruff check mcp_client_console
 
 format:
 	@echo "🎨 Formatting code..."
-	uv run autoflake --in-place --remove-all-unused-imports --remove-unused-variables --recursive .
-	uv run isort .
-	uv run black .
+	uv run ruff check --fix mcp_client_console
+	uv run ruff format mcp_client_console
+
+format-check:
+	@echo "🔍 Checking code formatting..."
+	uv run ruff check mcp_client_console
+	uv run ruff format --check mcp_client_console
 
 type-check:
 	@echo "🔎 Running type checks..."
@@ -65,5 +73,5 @@ clean:
 	find . -type f -name "*.pyc" -delete
 
 # Quality checks (run all checks)
-check: lint type-check test
+check: lint format-check type-check test
 	@echo "✅ All quality checks passed!"
