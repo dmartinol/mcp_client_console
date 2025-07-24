@@ -45,6 +45,7 @@ dev = [
     "mypy>=1.0.0",
     "pre-commit>=3.0.0",
     "types-requests>=2.31.0",
+    "twine>=4.0.0",
 ]
 test = [
     "pytest>=7.0.0",
