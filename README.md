@@ -1,7 +1,10 @@
 # MCP Client Test Console
 
 [![CI](https://github.com/dmartinol/mcp_client_console/actions/workflows/ci.yml/badge.svg)](https://github.com/dmartinol/mcp_client_console/actions/workflows/ci.yml)
-
+[![Coverage](https://codecov.io/gh/dmartinol/mcp_client_console/branch/main/graph/badge.svg)](https://codecov.io/gh/dmartinol/mcp_client_console)
+[![Python Versions](https://img.shields.io/pypi/pyversions/mcp-client-console)](https://pypi.org/project/mcp-client-console/)
+[![License](https://img.shields.io/github/license/dmartinol/mcp_client_console)](https://github.com/dmartinol/mcp_client_console/blob/main/LICENSE)
+[![MCP Version](https://img.shields.io/badge/MCP-1.0.0-blue.svg)](https://modelcontextprotocol.io/)
 A simple Python UI to test MCP (Model Context Protocol) servers for compliance with the MCP protocol.
 
 ## Features
