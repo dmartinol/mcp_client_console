@@ -3,6 +3,7 @@ Main application entry point for MCP Client Console.
 """
 
 import asyncio
+from typing import Any, Dict
 
 import streamlit as st
 
@@ -33,7 +34,7 @@ def create_tool_form(tool_info, tool_index: int):
 
     with st.form(key=f"tool_form_{tool_info.name}_{tool_index}"):
         st.write("**Execute Tool:**")
-        args = {}
+        args: Dict[str, Any] = {}
 
         # Parse schema to create form inputs
         schema = tool_info.input_schema
@@ -75,10 +76,10 @@ def create_tool_form(tool_info, tool_index: int):
                 elif arg_type == "array":
                     import json
 
-                    default = str(default_val) if default_val is not None else ""
+                    default_str = str(default_val) if default_val is not None else ""
                     json_input = st.text_area(
                         f"{arg_name} (JSON array)",
-                        value=default,
+                        value=default_str,
                         help="Enter a JSON array",
                         key=f"{tool_info.name}_{arg_name}_{tool_index}",
                     )
@@ -89,10 +90,10 @@ def create_tool_form(tool_info, tool_index: int):
                         st.error(f"Invalid JSON for {arg_name}")
                         args[arg_name] = []
                 else:  # string or other
-                    default = str(default_val) if default_val is not None else ""
+                    default_str = str(default_val) if default_val is not None else ""
                     args[arg_name] = st.text_input(
                         f"{arg_name}",
-                        value=default,
+                        value=default_str,
                         key=f"{tool_info.name}_{arg_name}_{tool_index}",
                     )
 

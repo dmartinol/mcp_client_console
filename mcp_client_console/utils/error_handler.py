@@ -33,7 +33,7 @@ class ErrorHandler:
         """
         error_message = str(error)
 
-        details = {
+        details: Dict[str, Any] = {
             "error_type": type(error).__name__,
             "error_message": error_message,
             "timestamp": datetime.now().isoformat(),
@@ -49,13 +49,18 @@ class ErrorHandler:
             details["traceback"] = error.traceback_info
 
         if isinstance(error, ConnectionError):
-            details["connection_type"] = error.connection_type
-            details["connection_params"] = error.connection_params
+            if error.connection_type is not None:
+                details["connection_type"] = error.connection_type
+            if error.connection_params is not None:
+                details["connection_params"] = error.connection_params
 
         if isinstance(error, ToolExecutionError):
-            details["tool_name"] = error.tool_name
-            details["arguments"] = error.arguments
-            details["execution_context"] = error.execution_context
+            if error.tool_name is not None:
+                details["tool_name"] = error.tool_name
+            if error.arguments is not None:
+                details["arguments"] = error.arguments
+            if error.execution_context is not None:
+                details["execution_context"] = error.execution_context
 
         return details
 
@@ -71,7 +76,7 @@ class ErrorHandler:
         Returns:
             Dictionary with analysis results
         """
-        analysis = {
+        analysis: Dict[str, Any] = {
             "error_category": "unknown",
             "suggestions": [],
             "additional_context": {},

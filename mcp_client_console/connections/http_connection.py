@@ -40,7 +40,7 @@ class HTTPConnection(MCPConnection):
             if response.status_code == 200:
                 server_info = response.json()
                 logger.info("HTTP connection successful")
-                return server_info
+                return server_info if isinstance(server_info, dict) else {}
             else:
                 raise ConnectionError(
                     f"HTTP connection failed with status {response.status_code}"

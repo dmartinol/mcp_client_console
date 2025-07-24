@@ -140,6 +140,12 @@ class MCPClientService:
             start_time = time.time()
 
             # Execute tool through connection
+            if self.connection is None:
+                raise ToolExecutionError(
+                    "Not connected to MCP server",
+                    tool_name=tool_name,
+                    arguments=arguments,
+                )
             result = await self.connection.call_tool(tool_name, arguments)
 
             execution_time = time.time() - start_time
@@ -157,7 +163,7 @@ class MCPClientService:
 
         except Exception as e:
             execution_time = (
-                time.time() - start_time if "start_time" in locals() else None
+                time.time() - start_time if "start_time" in locals() else 0.0
             )
 
             logger.error(f"Tool execution failed for '{tool_name}': {e}")
