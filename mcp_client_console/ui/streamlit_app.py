@@ -54,16 +54,29 @@ def create_tool_form(tool_info, tool_index: int):
                 if arg_type == "number" or arg_type == "integer":
                     default = float(default_val) if default_val is not None else 0.0
                     if arg_type == "integer":
+                        # Enhanced number input with better range and step control
+                        min_val = max(-1000, int(default) - 100)
+                        max_val = min(1000, int(default) + 100)
                         args[arg_name] = st.number_input(
                             f"{arg_name}",
+                            min_value=min_val,
+                            max_value=max_val,
                             value=int(default),
                             step=1,
+                            help=f"Integer value for {arg_name}",
                             key=f"{tool_info.name}_{arg_name}_{tool_index}",
                         )
                     else:
+                        # Enhanced number input with better range and step control
+                        min_val = max(-1000.0, default - 10.0)
+                        max_val = min(1000.0, default + 10.0)
                         args[arg_name] = st.number_input(
                             f"{arg_name}",
+                            min_value=min_val,
+                            max_value=max_val,
                             value=default,
+                            step=0.1,
+                            help=f"Number value for {arg_name}",
                             key=f"{tool_info.name}_{arg_name}_{tool_index}",
                         )
                 elif arg_type == "boolean":
