@@ -39,7 +39,7 @@ run:
 
 test:
 	@echo "🧪 Running tests with coverage..."
-	uv run pytest --cov=mcp_client_console --cov-report=term-missing --cov-report=html
+	uv run pytest --cov=mcp_client_console --cov-report=term-missing --cov-report=html --cov-report=xml
 
 lint:
 	@echo "🔍 Running linter..."

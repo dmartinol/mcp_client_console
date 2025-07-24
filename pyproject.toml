@@ -190,6 +190,9 @@ exclude_lines = [
     "if TYPE_CHECKING:",
 ]
 
+[tool.coverage.xml]
+output = "coverage.xml"
+
 [dependency-groups]
 dev = [
     "pytest-cov>=6.2.1",
