@@ -17,7 +17,7 @@ class TestMCPConnectionInterface:
         """Test that MCPConnection defines the required abstract methods"""
         # Check that the abstract methods are defined
         abstract_methods = MCPConnection.__abstractmethods__
-        expected_methods = {'connect', 'disconnect', 'send_message', 'receive_message'}
+        expected_methods = {'connect', 'disconnect', 'call_tool'}
         
         assert expected_methods.issubset(abstract_methods)
 
@@ -28,17 +28,15 @@ class TestMCPConnectionInterface:
             def __init__(self):
                 self.is_connected = False
             
-            async def connect(self) -> None:
+            async def connect(self) -> Dict[str, Any]:
                 self.is_connected = True
+                return {}
             
             async def disconnect(self) -> None:
                 self.is_connected = False
             
-            async def send_message(self, message: Dict[str, Any]) -> Dict[str, Any]:
-                return {"status": "sent", "message": message}
-            
-            async def receive_message(self) -> Dict[str, Any]:
-                return {"status": "received"}
+            async def call_tool(self, tool_name: str, arguments: Dict[str, Any]) -> Any:
+                return {"status": "executed", "tool": tool_name, "arguments": arguments}
 
         # This should work without raising an exception
         connection = ConcreteConnection()
@@ -57,16 +55,13 @@ class TestMCPConnectionInterface:
             def __init__(self):
                 self.is_connected = False
             
-            async def connect(self) -> None:
-                pass
+            async def connect(self) -> Dict[str, Any]:
+                return {}
             
             async def disconnect(self) -> None:
                 pass
             
-            async def send_message(self, message: Dict[str, Any]) -> Dict[str, Any]:
-                return {}
-            
-            async def receive_message(self) -> Dict[str, Any]:
+            async def call_tool(self, tool_name: str, arguments: Dict[str, Any]) -> Any:
                 return {}
 
         connection = TestConnection()
@@ -81,39 +76,32 @@ class TestMCPConnectionInterface:
         class AsyncConnection(MCPConnection):
             def __init__(self):
                 self.is_connected = False
-                self.messages = []
+                self.tools_called = []
             
-            async def connect(self) -> None:
+            async def connect(self) -> Dict[str, Any]:
                 self.is_connected = True
+                return {}
             
             async def disconnect(self) -> None:
                 self.is_connected = False
             
-            async def send_message(self, message: Dict[str, Any]) -> Dict[str, Any]:
+            async def call_tool(self, tool_name: str, arguments: Dict[str, Any]) -> Any:
                 if not self.is_connected:
                     raise RuntimeError("Not connected")
-                self.messages.append(message)
-                return {"sent": True}
-            
-            async def receive_message(self) -> Dict[str, Any]:
-                if not self.is_connected:
-                    raise RuntimeError("Not connected")
-                return {"received": True}
+                self.tools_called.append({"tool": tool_name, "arguments": arguments})
+                return {"executed": True, "tool": tool_name}
 
         connection = AsyncConnection()
         
         # Test connection lifecycle
-        await connection.connect()
+        result = await connection.connect()
         assert connection.is_connected is True
+        assert result == {}
         
-        # Test message sending
-        result = await connection.send_message({"test": "message"})
-        assert result == {"sent": True}
-        assert connection.messages == [{"test": "message"}]
-        
-        # Test message receiving
-        result = await connection.receive_message()
-        assert result == {"received": True}
+        # Test tool calling
+        result = await connection.call_tool("test_tool", {"param": "value"})
+        assert result == {"executed": True, "tool": "test_tool"}
+        assert connection.tools_called == [{"tool": "test_tool", "arguments": {"param": "value"}}]
         
         # Test disconnection
         await connection.disconnect()
