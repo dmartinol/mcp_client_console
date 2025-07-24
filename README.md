@@ -1,5 +1,7 @@
 # MCP Client Test Console
 
+[![CI](https://github.com/dmartino/mcp_client_console/actions/workflows/ci.yml/badge.svg)](https://github.com/dmartino/mcp_client_console/actions/workflows/ci.yml)
+
 A simple Python UI to test MCP (Model Context Protocol) servers for compliance with the MCP protocol.
 
 ## Features
